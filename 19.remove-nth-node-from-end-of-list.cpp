@@ -9,33 +9,22 @@ struct ListNode {
 // @leet start
 
 class Solution {
-private:
-    int totalNode = 0;
-    bool deleteRoot = false;
-
 public:
-    ListNode * removeNthFromEnd(ListNode * currentNode, int n, int current = 1,
-                                bool isRoot = true) {
-        if (!currentNode->next) {
-            totalNode = current;
-            if (totalNode == n) {
-                deleteRoot = true;
-            }
-            return nullptr;
+    ListNode * removeNthFromEnd(ListNode * head, int n) {
+        ListNode dummy(0, head);
+        ListNode *fast = &dummy, *slow = &dummy;
+
+        while (n--) {
+            fast = fast->next;
         }
 
-        removeNthFromEnd(currentNode->next, n, current + 1, false);
-
-        if (!deleteRoot && current == totalNode - n) {
-            currentNode->next =
-                (currentNode->next ? currentNode->next->next : nullptr);
+        while (fast->next) {
+            fast = fast->next;
+            slow = slow->next;
         }
 
-        if (deleteRoot && isRoot) {
-            return currentNode->next;
-        }
-
-        return currentNode;
+        slow->next = slow->next->next;
+        return dummy.next;
     }
 };
 // @leet end
