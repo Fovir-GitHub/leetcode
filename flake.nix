@@ -20,8 +20,6 @@
       shellHook = ''
         echo "Entering the development environment!"
         java --version
-
-        trap 'echo "Leaving the development environment!"' EXIT
       '';
     };
   };
