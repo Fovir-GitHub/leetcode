@@ -7,26 +7,22 @@ import java.util.*;
 // @leet start
 class Solution {
   public int longestValidParentheses(String s) {
-    Stack<Integer> st = new Stack<>();
-    int longest = 0;
-    int i = 0;
-    int n = s.length();
+    int[] dp = new int[s.length()];
+    int result = 0;
+    int leftCounter = 0;
 
-    st.push(-1);
-    for (; i < n; i++) {
+    for (int i = 0; i < s.length(); i++) {
       if (s.charAt(i) == '(') {
-        st.push(i);
-      } else {
-        st.pop();
-        if (st.empty()) {
-          st.push(i);
-        } else {
-          longest = Math.max(longest, i - st.peek());
-        }
+        leftCounter++;
+      } else if (leftCounter > 0) {
+        dp[i] = dp[i - 1] + 2;
+        dp[i] += (i - dp[i] >= 0) ? dp[i - dp[i]] : 0;
+        result = Math.max(result, dp[i]);
+        leftCounter--;
       }
     }
 
-    return longest;
+    return result;
   }
 }
 // @leet end
