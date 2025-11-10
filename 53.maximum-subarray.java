@@ -7,18 +7,15 @@ import java.util.*;
 // @leet start
 class Solution {
   public int maxSubArray(int[] nums) {
-    int n = nums.length;
-    int previous = nums[0];
-    int current = 0;
-    int maxSum = nums[0];
+    int currentMax = 0;
+    int tillNowMax = Integer.MIN_VALUE;
 
-    for (int i = 1; i < n; i++) {
-      current = nums[i] + Math.max(previous, 0);
-      maxSum = Math.max(current, maxSum);
-      previous = current;
+    for (int num : nums) {
+      currentMax = Math.max(currentMax + num, num);
+      tillNowMax = Math.max(currentMax, tillNowMax);
     }
 
-    return maxSum;
+    return tillNowMax;
   }
 }
 // @leet end
